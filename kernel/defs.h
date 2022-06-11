@@ -202,6 +202,9 @@ void            statsinc(void);
 // sprintf.c
 int             snprintf(char*, int, char*, ...);
 
+//vm.c
+void            vmprint(pagetable_t, uint64);
+
 #ifdef LAB_NET
 // pci.c
 void            pci_init();
