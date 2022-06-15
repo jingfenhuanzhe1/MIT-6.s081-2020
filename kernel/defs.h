@@ -158,10 +158,11 @@ void            uartputc_sync(int);
 int             uartgetc(void);
 
 // vm.c
+void            kvm_map_pagetable(pagetable_t);
 void            kvminit(void);
 void            kvminithart(void);
-uint64          kvmpa(uint64);
-void            kvmmap(uint64, uint64, uint64, int);
+uint64          kvmpa(pagetable_t, uint64);
+void            kvmmap(pagetable_t, uint64, uint64, uint64, int);
 int             mappages(pagetable_t, uint64, uint64, uint64, int);
 pagetable_t     uvmcreate(void);
 void            uvminit(pagetable_t, uchar *, uint);
@@ -178,6 +179,11 @@ uint64          walkaddr(pagetable_t, uint64);
 int             copyout(pagetable_t, uint64, char *, uint64);
 int             copyin(pagetable_t, char *, uint64, uint64);
 int             copyinstr(pagetable_t, char *, uint64, uint64);
+void            kvm_free_kernelpgtbl(pagetable_t);
+pagetable_t     kvminit_newpgtbl(void);   
+uint64          kvmdealloc(pagetable_t, uint64, uint64);
+int             kvmcopymappings(pagetable_t, pagetable_t, uint64, uint64);   
+void            vmprint(pagetable_t);      
 
 // plic.c
 void            plicinit(void);
@@ -192,6 +198,11 @@ void            virtio_disk_intr(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
 
 
@@ -203,7 +214,11 @@ void            statsinc(void);
 int             snprintf(char*, int, char*, ...);
 
 //vm.c
+<<<<<<< Updated upstream
 void            vmprint(pagetable_t, uint64);
+=======
+void            vmprintf(pagetable_t, uint64);
+>>>>>>> Stashed changes
 
 #ifdef LAB_NET
 // pci.c
@@ -226,3 +241,7 @@ int             sockread(struct sock *, uint64, int);
 int             sockwrite(struct sock *, uint64, int);
 void            sockrecvudp(struct mbuf*, uint32, uint16, uint16);
 #endif
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
