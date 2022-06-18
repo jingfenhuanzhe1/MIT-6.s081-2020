@@ -103,4 +103,18 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  //lab4 traps
+  // int ticks;                    //报警间隔
+  // void (*handler)();             //回调函数
+  // int time;                       //用于跟踪自上一次调用直到下一次调用报警程序间经历了多少滴答
+  // struct trapframe* alarm_trapframe;    //时钟中断时刻时的trapframe，用于中断处理后恢复原程序的正常执行
+  // int alarm_goingoff;                   //是否已经有一个回调函数正在执行并未返回，用于防止alarm_handler
+  //                                       //中途闹钟到期再次调用alarm_handler,导致alarm_trapframe被覆盖    
+
+  int ticks;
+  int tick_cnt;
+  void(*handler)();
+  struct trapframe* alarm_trapframe;
+  int goOrOff;  
 };

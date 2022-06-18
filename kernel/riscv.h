@@ -117,14 +117,14 @@ w_mie(uint64 x)
 static inline void 
 w_sepc(uint64 x)
 {
-  asm volatile("csrw sepc, %0" : : "r" (x));
+  asm volatile("csrw sepc, %0" : : "r" (x));          //csrw sepc, x   将x的值写入到sepc寄存器中
 }
 
 static inline uint64
 r_sepc()
 {
   uint64 x;
-  asm volatile("csrr %0, sepc" : "=r" (x) );
+  asm volatile("csrr %0, sepc" : "=r" (x) );         //csrr x, sepc
   return x;
 }
 
@@ -318,6 +318,16 @@ sfence_vma()
   // the zero, zero means flush all TLB entries.
   asm volatile("sfence.vma zero, zero");
 }
+
+//lab4 traps
+static inline uint64
+r_fp()
+{
+  uint64 x;
+  asm volatile("mv %0, s0" : "=r" (x) );
+  return x;
+}
+
 
 
 #define PGSIZE 4096 // bytes per page
