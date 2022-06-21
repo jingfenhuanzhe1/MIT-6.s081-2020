@@ -694,3 +694,33 @@ procdump(void)
     printf("\n");
   }
 }
+
+
+//lab 5
+int uvmshouldtouch(uint64 va){
+  //pte_t* pte;
+  struct proc *p;
+  p = myproc();
+  return va < p->sz && PGROUNDDOWN(va) != r_sp() && (((pte = walk(p->pagetable, va, 0)) == 0) || ((*pte & PTE_V) == 0));
+  // if(va >= p->sz) return 0;
+  // if(va < PGROUNDDOWN(p->trapframe->sp) && va >= PGROUNDDOWN(p->trapframe->sp) - PGSIZE){
+  //   return 0;
+  // }
+  // return 1;
+} 
+
+void uvmlazytouch(uint64 va){
+  char* mem = kalloc();
+  struct proc* p = myproc();
+  
+  if(mem == 0){
+    printf("kalloc fail\n");
+    p->killed = 1;
+  } else {
+    memset(mem, 0, PGSIZE);
+    if(mappages(p->pagetable, PGROUNDDOWN(va), PGSIZE, (uint64)mem, PTE_W|PTE_X|PTE_R|PTE_U) != 0){
+      kfree(mem);
+      p->killed = 1;
+    }
+  }
+}

@@ -85,7 +85,7 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
       *pte = PA2PTE(pagetable) | PTE_V;
     }
   }
-  return &pagetable[PX(0, va)];
+  return &pagetable[PX(0, va)];        //取出0级页表中的一项来
 }
 
 // Look up a virtual address, return the physical address,
@@ -154,7 +154,7 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
   a = PGROUNDDOWN(va);
   last = PGROUNDDOWN(va + size - 1);
   for(;;){
-    if((pte = walk(pagetable, a, 1)) == 0)
+    if((pte = walk(pagetable, a, 1)) == 0)   //取出0级页表中对应的页表项，在这个页表项上进行赋值
       return -1;
     if(*pte & PTE_V)
       panic("remap");
@@ -170,7 +170,7 @@ mappages(pagetable_t pagetable, uint64 va, uint64 size, uint64 pa, int perm)
 // Remove npages of mappings starting from va. va must be
 // page-aligned. The mappings must exist.
 // Optionally free the physical memory.
-void
+void                        //取消映射，如果有需要再释放对应的物理内存
 uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
 {
   uint64 a;
@@ -181,10 +181,10 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
 
   for(a = va; a < va + npages*PGSIZE; a += PGSIZE){
     if((pte = walk(pagetable, a, 0)) == 0)
-      panic("uvmunmap: walk");
+      continue;
     if((*pte & PTE_V) == 0)
-      panic("uvmunmap: not mapped");
-    if(PTE_FLAGS(*pte) == PTE_V)
+      continue;
+    if(PTE_FLAGS(*pte) == PTE_V)          //检查低10位中除了PTE_V是否全是0(2级和1级的页表是这样的),
       panic("uvmunmap: not a leaf");
     if(do_free){
       uint64 pa = PTE2PA(*pte);
@@ -315,14 +315,14 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
 
   for(i = 0; i < sz; i += PGSIZE){
     if((pte = walk(old, i, 0)) == 0)
-      panic("uvmcopy: pte should exist");
+      continue;                  //如果一个页不存在，则认为是懒加载的页
     if((*pte & PTE_V) == 0)
-      panic("uvmcopy: page not present");
+      continue;                  //如果一个页不存在，则认为是一个懒加载的页
     pa = PTE2PA(*pte);
     flags = PTE_FLAGS(*pte);
     if((mem = kalloc()) == 0)
       goto err;
-    memmove(mem, (char*)pa, PGSIZE);
+    memmove(mem, (char*)pa, PGSIZE);             //memmove实现源到目的的拷贝
     if(mappages(new, i, PGSIZE, (uint64)mem, flags) != 0){
       kfree(mem);
       goto err;
@@ -356,6 +356,10 @@ copyout(pagetable_t pagetable, uint64 dstva, char *src, uint64 len)
 {
   uint64 n, va0, pa0;
 
+  if(uvmshouldtouch(dstva)){
+    uvmlazytouch(dstva);
+  }
+
   while(len > 0){
     va0 = PGROUNDDOWN(dstva);
     pa0 = walkaddr(pagetable, va0);
@@ -380,6 +384,10 @@ int
 copyin(pagetable_t pagetable, char *dst, uint64 srcva, uint64 len)
 {
   uint64 n, va0, pa0;
+
+  if(uvmshouldtouch(srcva)){
+    uvmlazytouch(srcva);
+  }
 
   while(len > 0){
     va0 = PGROUNDDOWN(srcva);
