@@ -694,3 +694,36 @@ procdump(void)
     printf("\n");
   }
 }
+
+
+int uvmcheckcow(uint64 va){
+  struct proc* p = myproc();
+  pte_t* pte;
+  return va < p->sz
+         && ((pte = walk(p->pagetable, va, 0)) != 0)
+         && (*pte & PTE_V)
+         && (*pte & PTE_COW);
+}
+
+//复制并分配物理内存， 重新映射为可写
+int uvmcowcopy(uint64 va){
+  struct proc* p = myproc();
+  pte_t* pte;
+  if((pte = walk(p->pagetable, va, 0)) == 0){
+    panic("uvmcowcopy: walk");
+  }
+
+  uint64 pa = PTE2PA(*pte);
+  uint64 new = (uint64)kcopy_n_deref((void*)pa);
+  if(new == 0){
+    return -1;
+  }
+
+  //重新映射为可写，并消除PTE_COW标记
+  uint64 flags = (PTE_FLAGS(*pte) | PTE_W) & ~PTE_COW;
+  uvmunmap(p->pagetable, PGROUNDDOWN(va), 1, 0);
+  if(mappages(p->pagetable, va, 1, new, flags) == -1){
+    panic("uvmcheckcow: mappages");
+  }
+  return 0;
+}
