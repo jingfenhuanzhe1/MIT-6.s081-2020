@@ -52,10 +52,10 @@ void uartstart();
 void
 uartinit(void)
 {
-  // disable interrupts.
+  // disable interrupts.   //关闭中断
   WriteReg(IER, 0x00);
 
-  // special mode to set baud rate.
+  // special mode to set baud rate.              //设置波特率，波特率：串口线的传输速率
   WriteReg(LCR, LCR_BAUD_LATCH);
 
   // LSB for baud rate of 38.4K.
@@ -65,13 +65,13 @@ uartinit(void)
   WriteReg(1, 0x00);
 
   // leave set-baud mode,
-  // and set word length to 8 bits, no parity.
+  // and set word length to 8 bits, no parity.          //设置字符长度8bit
   WriteReg(LCR, LCR_EIGHT_BITS);
 
-  // reset and enable FIFOs.
+  // reset and enable FIFOs.                            //重置FIFO
   WriteReg(FCR, FCR_FIFO_ENABLE | FCR_FIFO_CLEAR);
 
-  // enable transmit and receive interrupts.
+  // enable transmit and receive interrupts.              //打开中断
   WriteReg(IER, IER_TX_ENABLE | IER_RX_ENABLE);
 
   initlock(&uart_tx_lock, "uart");
@@ -84,11 +84,11 @@ uartinit(void)
 // from interrupts; it's only suitable for use
 // by write().
 void
-uartputc(int c)
+uartputc(int c)                  //向输出缓冲区添加字符， 生产者对buffer的操作
 {
   acquire(&uart_tx_lock);
 
-  if(panicked){
+  if(panicked){        //panicked 来源于内核错误，在这里形成死循环，不会往下执行
     for(;;)
       ;
   }
@@ -115,7 +115,7 @@ uartputc(int c)
 void
 uartputc_sync(int c)
 {
-  push_off();
+  push_off();        //关闭中断
 
   if(panicked){
     for(;;)
@@ -127,7 +127,7 @@ uartputc_sync(int c)
     ;
   WriteReg(THR, c);
 
-  pop_off();
+  pop_off();        //打开中断
 }
 
 // if the UART is idle, and a character is waiting
@@ -180,7 +180,7 @@ void
 uartintr(void)
 {
   // read and process incoming characters.
-  while(1){
+  while(1){                                    //从键盘读取字符
     int c = uartgetc();
     if(c == -1)
       break;

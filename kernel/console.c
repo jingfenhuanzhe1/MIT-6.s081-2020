@@ -23,7 +23,7 @@
 #include "proc.h"
 
 #define BACKSPACE 0x100
-#define C(x)  ((x)-'@')  // Control-x
+#define C(x)  ((x)-'@')  // Control-x              CTRL- @ 0x0 、 CTRL- A 0x1、 CTRL- B 0x2、 CTRL- C 0x3
 
 //
 // send one character to the uart.
@@ -63,9 +63,9 @@ consolewrite(int user_src, uint64 src, int n)
   acquire(&cons.lock);
   for(i = 0; i < n; i++){
     char c;
-    if(either_copyin(&c, user_src, src+i, 1) == -1)
+    if(either_copyin(&c, user_src, src+i, 1) == -1)        //调用copyin， copyin从用户到内核
       break;
-    uartputc(c);
+    uartputc(c);                        //负责输出字符
   }
   release(&cons.lock);
 
@@ -75,11 +75,11 @@ consolewrite(int user_src, uint64 src, int n)
 //
 // user read()s from the console go here.
 // copy (up to) a whole input line to dst.
-// user_dist indicates whether dst is a user
+// user_dst indicates whether dst is a user
 // or kernel address.
 //
 int
-consoleread(int user_dst, uint64 dst, int n)
+consoleread(int user_dst, uint64 dst, int n)     //user_dst 布尔值，指示目的地址是否是用户空间
 {
   uint target;
   int c;

@@ -36,7 +36,7 @@ start()
   // delegate all interrupts and exceptions to supervisor mode.
   w_medeleg(0xffff);
   w_mideleg(0xffff);
-  w_sie(r_sie() | SIE_SEIE | SIE_STIE | SIE_SSIE);
+  w_sie(r_sie() | SIE_SEIE | SIE_STIE | SIE_SSIE);    //设置SIE寄存器能接收外部中断，软件中断和定时器中断
 
   // ask for clock interrupts.
   timerinit();

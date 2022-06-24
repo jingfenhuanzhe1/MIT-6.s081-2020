@@ -644,7 +644,7 @@ either_copyout(int user_dst, uint64 dst, void *src, uint64 len)
 {
   struct proc *p = myproc();
   if(user_dst){
-    return copyout(p->pagetable, dst, src, len);
+    return copyout(p->pagetable, dst, src, len);               //内核到用户空间
   } else {
     memmove((char *)dst, src, len);
     return 0;
@@ -659,9 +659,9 @@ either_copyin(void *dst, int user_src, uint64 src, uint64 len)
 {
   struct proc *p = myproc();
   if(user_src){
-    return copyin(p->pagetable, dst, src, len);
+    return copyin(p->pagetable, dst, src, len);              //copyin 从用户到内核
   } else {
-    memmove(dst, (char*)src, len);
+    memmove(dst, (char*)src, len);                          //内核到内核
     return 0;
   }
 }

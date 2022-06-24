@@ -38,8 +38,8 @@ w_mepc(uint64 x)
   asm volatile("csrw mepc, %0" : : "r" (x));
 }
 
-// Supervisor Status Register, sstatus
-
+// Supervisor Status Register, sstatus              每个CPU都有独立的SIE寄存器和SSTATUS寄存器
+                                              //此寄存器中有一个bit位可以控制所有中断
 #define SSTATUS_SPP (1L << 8)  // Previous mode, 1=Supervisor, 0=User
 #define SSTATUS_SPIE (1L << 5) // Supervisor Previous Interrupt Enable
 #define SSTATUS_UPIE (1L << 4) // User Previous Interrupt Enable
@@ -60,8 +60,8 @@ w_sstatus(uint64 x)
   asm volatile("csrw sstatus, %0" : : "r" (x));
 }
 
-// Supervisor Interrupt Pending
-static inline uint64
+// Supervisor Interrupt Pending                  //SIP 寄存器。发生中断时，处理器可以通过查看这个寄存器
+static inline uint64                             //知道当前是什么类型的中断
 r_sip()
 {
   uint64 x;
@@ -75,10 +75,10 @@ w_sip(uint64 x)
   asm volatile("csrw sip, %0" : : "r" (x));
 }
 
-// Supervisor Interrupt Enable
-#define SIE_SEIE (1L << 9) // external
-#define SIE_STIE (1L << 5) // timer
-#define SIE_SSIE (1L << 1) // software
+// Supervisor Interrupt Enable               每个CPU都有独立的SIE寄存器 和 SSTATUS寄存器
+#define SIE_SEIE (1L << 9) // external              E bit位专门针对外部设备的中断
+#define SIE_STIE (1L << 5) // timer                 T bit位专门针对定时器中断
+#define SIE_SSIE (1L << 1) // software              S bit位专门针对软件中断
 static inline uint64
 r_sie()
 {
@@ -159,7 +159,7 @@ w_mideleg(uint64 x)
 }
 
 // Supervisor Trap-Vector Base Address
-// low two bits are mode.
+// low two bits are mode.                      //发生中断时，会保存CPU运行的用户程序的程序计数器
 static inline void 
 w_stvec(uint64 x)
 {
@@ -261,7 +261,7 @@ r_time()
 static inline void
 intr_on()
 {
-  w_sstatus(r_sstatus() | SSTATUS_SIE);
+  w_sstatus(r_sstatus() | SSTATUS_SIE);       //设置SSATUS寄存器，打开中断标志位
 }
 
 // disable device interrupts
