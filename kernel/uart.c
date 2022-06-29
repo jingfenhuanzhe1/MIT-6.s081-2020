@@ -41,7 +41,7 @@
 // the transmit output buffer.
 struct spinlock uart_tx_lock;
 #define UART_TX_BUF_SIZE 32
-char uart_tx_buf[UART_TX_BUF_SIZE];
+char uart_tx_buf[UART_TX_BUF_SIZE];                         //向输出端的缓冲区
 int uart_tx_w; // write next to uart_tx_buf[uart_tx_w++]
 int uart_tx_r; // read next from uart_tx_buf[uar_tx_r++]
 
@@ -77,7 +77,7 @@ uartinit(void)
   initlock(&uart_tx_lock, "uart");
 }
 
-// add a character to the output buffer and tell the
+// add a character to the output buffer and tell the           output buffer
 // UART to start sending if it isn't already.
 // blocks if the output buffer is full.
 // because it may block, it can't be called
@@ -132,7 +132,7 @@ uartputc_sync(int c)
 
 // if the UART is idle, and a character is waiting
 // in the transmit buffer, send it.
-// caller must hold uart_tx_lock.
+// caller must hold uart_tx_lock.          调用者必须持有uart_tx_lock
 // called from both the top- and bottom-half.
 void
 uartstart()
@@ -143,7 +143,7 @@ uartstart()
       return;
     }
     
-    if((ReadReg(LSR) & LSR_TX_IDLE) == 0){
+    if((ReadReg(LSR) & LSR_TX_IDLE) == 0){           // #define LSR 5     //  #define LSR_TX_IDLE 32
       // the UART transmit holding register is full,
       // so we cannot give it another byte.
       // it will interrupt when it's ready for a new byte.
@@ -156,7 +156,7 @@ uartstart()
     // maybe uartputc() is waiting for space in the buffer.
     wakeup(&uart_tx_r);
     
-    WriteReg(THR, c);
+    WriteReg(THR, c);          // transmit holding register (for output bytes)
   }
 }
 
