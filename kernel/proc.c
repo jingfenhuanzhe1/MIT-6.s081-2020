@@ -44,7 +44,7 @@ procinit(void)
   kvminithart();
 }
 
-// Must be called with interrupts disabled,
+// Must be called with interrupts disabled,   //关闭中断的程序才能调用此函数
 // to prevent race with process being moved
 // to a different CPU.
 int
@@ -55,7 +55,7 @@ cpuid()
 }
 
 // Return this CPU's cpu struct.
-// Interrupts must be disabled.
+// Interrupts must be disabled.             //关闭中断的程序才能调用此函数
 struct cpu*
 mycpu(void) {
   int id = cpuid();
@@ -256,7 +256,7 @@ growproc(int n)
 // Create a new process, copying the parent.
 // Sets up child kernel stack to return as if from fork() system call.
 int
-fork(void)
+fork(void)                //子进程返回0， 父进程返回子进程的pid
 {
   int i, pid;
   struct proc *np;
@@ -330,7 +330,7 @@ reparent(struct proc *p)
 // An exited process remains in the zombie state
 // until its parent calls wait().
 void
-exit(int status)
+exit(int status)                     //将其子进程提供给 init 进程
 {
   struct proc *p = myproc();
 
@@ -363,7 +363,7 @@ exit(int status)
   // grab a copy of p->parent, to ensure that we unlock the same
   // parent we locked. in case our parent gives us away to init while
   // we're waiting for the parent lock. we may then race with an
-  // exiting parent, but the result will be a harmless spurious wakeup
+  // exiting parent, but the result will be a harmless spurious wakeup   spurious：虚假的
   // to a dead or wrong process; proc structs are never re-allocated
   // as anything else.
   acquire(&p->lock);
@@ -408,7 +408,7 @@ wait(uint64 addr)
   for(;;){
     // Scan through table looking for exited children.
     havekids = 0;
-    for(np = proc; np < &proc[NPROC]; np++){
+    for(np = proc; np < &proc[NPROC]; np++){         // np是子进程
       // this code uses np->parent without holding np->lock.
       // acquiring the lock first would cause a deadlock,
       // since np might be an ancestor, and we already hold p->lock.
@@ -466,7 +466,7 @@ scheduler(void)
     
     int nproc = 0;
     for(p = proc; p < &proc[NPROC]; p++) {
-      acquire(&p->lock);
+      acquire(&p->lock);          //会关闭中断
       if(p->state != UNUSED) {
         nproc++;
       }
@@ -476,7 +476,7 @@ scheduler(void)
         // before jumping back to us.
         p->state = RUNNING;
         c->proc = p;
-        swtch(&c->context, &p->context);
+        swtch(&c->context, &p->context);     //c->context调度程序线程上下文，p->context内核线程上下文
 
         // Process is done running for now.
         // It should have changed its p->state before coming back.
@@ -491,7 +491,7 @@ scheduler(void)
   }
 }
 
-// Switch to scheduler.  Must hold only p->lock
+// Switch to scheduler.  Must hold only p->lock       必须持有锁
 // and have changed proc->state. Saves and restores
 // intena because intena is a property of this
 // kernel thread, not this CPU. It should
@@ -499,12 +499,12 @@ scheduler(void)
 // break in the few places where a lock is held but
 // there's no process.
 void
-sched(void)
+sched(void)           //进行各种各样的检查
 {
   int intena;
   struct proc *p = myproc();
 
-  if(!holding(&p->lock))
+  if(!holding(&p->lock))      //若没上锁
     panic("sched p->lock");
   if(mycpu()->noff != 1)
     panic("sched locks");
@@ -514,7 +514,7 @@ sched(void)
     panic("sched interruptible");
 
   intena = mycpu()->intena;
-  swtch(&p->context, &mycpu()->context);
+  swtch(&p->context, &mycpu()->context); //将当前内核线程的寄存器保存到p->context中， mycpu()->context保存当前CPU核的调度器线程的寄存器
   mycpu()->intena = intena;
 }
 
@@ -605,7 +605,7 @@ wakeup(void *chan)
 static void
 wakeup1(struct proc *p)
 {
-  if(!holding(&p->lock))
+  if(!holding(&p->lock))       //未上锁，则报panic错误
     panic("wakeup1");
   if(p->chan == p && p->state == SLEEPING) {
     p->state = RUNNABLE;

@@ -77,7 +77,7 @@ int
 holding(struct spinlock *lk)
 {
   int r;
-  r = (lk->locked && lk->cpu == mycpu());
+  r = (lk->locked && lk->cpu == mycpu());             //检查是否上锁
   return r;
 }
 

@@ -5,9 +5,9 @@
 # Save current registers in old. Load from new.	
 
 
-.globl swtch
+.globl swtch                # switch 是C语言中的关键字，因此这个函数命名为swtch来避免冲突
 swtch:
-        sd ra, 0(a0)
+        sd ra, 0(a0)         # a0寄存器对应了swtch函数的第一个参数，当前线程的context对象地址
         sd sp, 8(a0)
         sd s0, 16(a0)
         sd s1, 24(a0)
@@ -22,7 +22,7 @@ swtch:
         sd s10, 96(a0)
         sd s11, 104(a0)
 
-        ld ra, 0(a1)
+        ld ra, 0(a1)         # a1 寄存器是swtch函数的第二个参数，即将要切换到的调度器线程的context对象地址
         ld sp, 8(a1)
         ld s0, 16(a1)
         ld s1, 24(a1)
