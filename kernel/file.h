@@ -13,20 +13,20 @@ struct file {
 #define minor(dev)  ((dev) & 0xFFFF)
 #define	mkdev(m,n)  ((uint)((m)<<16| (n)))
 
-// in-memory copy of an inode
-struct inode {
+// in-memory copy of an inode        只有C指针引用某个inode时，内核才会在内存中存储该inode    在内存中的副本
+struct inode {                  // 大小为 64 字节
   uint dev;           // Device number
   uint inum;          // Inode number
-  int ref;            // Reference count
+  int ref;            // Reference count    统计引用内存中引用inode的C指针的数量，引用计数降至0，内核将该inode从内存写回磁盘
   struct sleeplock lock; // protects everything below here
   int valid;          // inode has been read from disk?
 
   short type;         // copy of disk inode
   short major;
   short minor;
-  short nlink;
-  uint size;
-  uint addrs[NDIRECT+1];
+  short nlink;           //统计引用文件的目录项的数量,
+  uint size;              //文件中内容的字节数
+  uint addrs[NDIRECT+1 + 1];
 };
 
 // map major device number to device functions.

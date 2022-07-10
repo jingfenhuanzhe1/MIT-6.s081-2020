@@ -33,18 +33,18 @@
 // Contents of the header block, used for both the on-disk header block
 // and to keep track in memory of logged block# before commit.
 struct logheader {
-  int n;
-  int block[LOGSIZE];
+  int n;               //日志块的计数
+  int block[LOGSIZE];  //扇区号数组         LOGSIZE = 30
 };
 
-struct log {
+struct log {          //只存在内存， 记录当前的日志信息，因为属于公共资源，所以有一把锁要避免竞争
   struct spinlock lock;
-  int start;
-  int size;
-  int outstanding; // how many FS sys calls are executing.
-  int committing;  // in commit(), please wait.
-  int dev;
-  struct logheader lh;
+  int start;                //日志区第一块块号
+  int size;                 //日志区大小
+  int outstanding; // how many FS sys calls are executing.   有多少系统调用正在执行
+  int committing;  // in commit(), please wait.        //正在提交
+  int dev;                                             //设备
+  struct logheader lh;                                 //日志头
 };
 struct log log;
 
@@ -58,10 +58,10 @@ initlog(int dev, struct superblock *sb)
     panic("initlog: too big logheader");
 
   initlock(&log.lock, "log");
-  log.start = sb->logstart;
-  log.size = sb->nlog;
-  log.dev = dev;
-  recover_from_log();
+  log.start = sb->logstart;    //第一个日志块块号
+  log.size = sb->nlog;         //日志块块数
+  log.dev = dev;               //日志所在设备
+  recover_from_log();          //从日志中恢复
 }
 
 // Copy committed blocks from log to their home location
@@ -71,10 +71,10 @@ install_trans(int recovering)
   int tail;
 
   for (tail = 0; tail < log.lh.n; tail++) {
-    struct buf *lbuf = bread(log.dev, log.start+tail+1); // read log block
-    struct buf *dbuf = bread(log.dev, log.lh.block[tail]); // read dst
-    memmove(dbuf->data, lbuf->data, BSIZE);  // copy block to dst
-    bwrite(dbuf);  // write dst to disk
+    struct buf *lbuf = bread(log.dev, log.start+tail+1); // read log block   读取日志块
+    struct buf *dbuf = bread(log.dev, log.lh.block[tail]); // read dst   读取日志块中数据本身应该在的磁盘块
+    memmove(dbuf->data, lbuf->data, BSIZE);  // copy block to dst       将数据复制到目的地
+    bwrite(dbuf);  // write dst to disk                         //同步缓存到磁盘
     if(recovering == 0)
       bunpin(dbuf);
     brelse(lbuf);
@@ -84,7 +84,7 @@ install_trans(int recovering)
 
 // Read the log header from disk into the in-memory log header
 static void
-read_head(void)
+read_head(void)            //从磁盘将日志头读出并拷贝到内存中
 {
   struct buf *buf = bread(log.dev, log.start);
   struct logheader *lh = (struct logheader *) (buf->data);
@@ -100,7 +100,7 @@ read_head(void)
 // This is the true point at which the
 // current transaction commits.
 static void
-write_head(void)
+write_head(void)        //从内存向磁盘写入日志头
 {
   struct buf *buf = bread(log.dev, log.start);
   struct logheader *hb = (struct logheader *) (buf->data);
@@ -109,14 +109,14 @@ write_head(void)
   for (i = 0; i < log.lh.n; i++) {
     hb->block[i] = log.lh.block[i];
   }
-  bwrite(buf);
+  bwrite(buf);    //以此函数为分界线，在这之前，数据还没有落盘，不可以恢复数据。在这函数之后数据已经落盘，可以恢复出数据。（commit point)
   brelse(buf);
 }
 
 static void
 recover_from_log(void)
 {
-  read_head();
+  read_head();              //读取日志头
   install_trans(1); // if committed, copy from log to disk
   log.lh.n = 0;
   write_head(); // clear the log
@@ -128,13 +128,13 @@ begin_op(void)
 {
   acquire(&log.lock);
   while(1){
-    if(log.committing){
+    if(log.committing){                  //如果日志正在提交， 休眠
       sleep(&log, &log.lock);
     } else if(log.lh.n + (log.outstanding+1)*MAXOPBLOCKS > LOGSIZE){
-      // this op might exhaust log space; wait for commit.
+      // this op might exhaust log space; wait for commit. 如果此次文件系统调用涉及的块数超过日志块数上限，休眠
       sleep(&log, &log.lock);
     } else {
-      log.outstanding += 1;
+      log.outstanding += 1;           //文件系统调用加1
       release(&log.lock);
       break;
     }
@@ -152,11 +152,11 @@ end_op(void)
   log.outstanding -= 1;
   if(log.committing)
     panic("log.committing");
-  if(log.outstanding == 0){
+  if(log.outstanding == 0){        //如果正在执行的文件系统调用为0，则可以提交了
     do_commit = 1;
     log.committing = 1;
   } else {
-    // begin_op() may be waiting for log space,
+    // begin_op() may be waiting for log space,       唤醒因日志空间不够而休眠的进程
     // and decrementing log.outstanding has decreased
     // the amount of reserved space.
     wakeup(&log);
@@ -168,19 +168,19 @@ end_op(void)
     // to sleep with locks.
     commit();
     acquire(&log.lock);
-    log.committing = 0;
-    wakeup(&log);
+    log.committing = 0;             //提交完知后设为没有处于提交状态
+    wakeup(&log);                   //日志空间已重置，唤醒因正在提交和空间不够而休眠的进程
     release(&log.lock);
   }
 }
 
 // Copy modified blocks from cache to log.
 static void
-write_log(void)
-{
+write_log(void)                 // 将内存中的缓存块写到日志区
+{ 
   int tail;
 
-  for (tail = 0; tail < log.lh.n; tail++) {
+  for (tail = 0; tail < log.lh.n; tail++) {            
     struct buf *to = bread(log.dev, log.start+tail+1); // log block
     struct buf *from = bread(log.dev, log.lh.block[tail]); // cache block
     memmove(to->data, from->data, BSIZE);
@@ -194,8 +194,8 @@ static void
 commit()
 {
   if (log.lh.n > 0) {
-    write_log();     // Write modified blocks from cache to log
-    write_head();    // Write header to disk -- the real commit
+    write_log();     // Write modified blocks from cache to log   将内存中的缓存块写到日志区
+    write_head();    // Write header to disk -- the real commit  *** 将日志头写到日志区第一块 完成这一步表示已提交，未完成表示没有提交
     install_trans(0); // Now install writes to home locations
     log.lh.n = 0;
     write_head();    // Erase the transaction from the log

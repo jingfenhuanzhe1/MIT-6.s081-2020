@@ -16,7 +16,7 @@
 struct devsw devsw[NDEV];
 struct {
   struct spinlock lock;
-  struct file file[NFILE];
+  struct file file[NFILE];          //  #define NFILE       100  // open files per system
 } ftable;
 
 void

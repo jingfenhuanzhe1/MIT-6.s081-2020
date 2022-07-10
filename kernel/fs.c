@@ -32,8 +32,8 @@ readsb(int dev, struct superblock *sb)
 {
   struct buf *bp;
 
-  bp = bread(dev, 1);
-  memmove(sb, bp->data, sizeof(*sb));
+  bp = bread(dev, 1);         // 1 表示块号为1的磁盘块, 从磁盘号为 1 的磁盘中读取内容到缓冲区，然后将其拷贝到内存中的sb
+  memmove(sb, bp->data, sizeof(*sb));    //void* memmove(void *dst, const void *src, uint n)
   brelse(bp);
 }
 
@@ -68,15 +68,15 @@ balloc(uint dev)
   struct buf *bp;
 
   bp = 0;
-  for(b = 0; b < sb.size; b += BPB){
+  for(b = 0; b < sb.size; b += BPB){    //每次叠加一块(block)   sb.size单位是块，b += BPB 是每次加8196块？？？ //BPB:bitmap bits (1024 * 8 = 8196)
     bp = bread(dev, BBLOCK(b, sb));
-    for(bi = 0; bi < BPB && b + bi < sb.size; bi++){
-      m = 1 << (bi % 8);
-      if((bp->data[bi/8] & m) == 0){  // Is block free?
+    for(bi = 0; bi < BPB && b + bi < sb.size; bi++){    //循环每一块中的每一位
+      m = 1 << (bi % 8);   // m = 1、10、100、1000、1 0000、 10 0000、 100 0000、 1000 0000 
+      if((bp->data[bi/8] & m) == 0){  // Is block free?    data中每个字节的每一位代表一个块，进行检查
         bp->data[bi/8] |= m;  // Mark block in use.
         log_write(bp);
         brelse(bp);
-        bzero(dev, b + bi);
+        bzero(dev, b + bi);                 // 块号为 b + bi
         return b + bi;
       }
     }
@@ -171,9 +171,9 @@ bfree(int dev, uint b)
 // dev, and inum.  One must hold ip->lock in order to
 // read or write that inode's ip->valid, ip->size, ip->type, &c.
 
-struct {
+struct {                    //保存当前活跃的inode, inode与icache都位于内存中，所以不存在icache为inode的缓冲区
   struct spinlock lock;
-  struct inode inode[NINODE];
+  struct inode inode[NINODE];             //#define NINODE       50 
 } icache;
 
 void
@@ -240,7 +240,7 @@ iupdate(struct inode *ip)
 // and return the in-memory copy. Does not lock
 // the inode and does not read it from disk.
 static struct inode*
-iget(uint dev, uint inum)
+iget(uint dev, uint inum)           //获取指向inode的指针，修改引用计数
 {
   struct inode *ip, *empty;
 
@@ -330,7 +330,7 @@ iunlock(struct inode *ip)
 // All calls to iput() must be inside a transaction in
 // case it has to free the inode.
 void
-iput(struct inode *ip)
+iput(struct inode *ip)  //释放指向inode的指针，修改引用计数
 {
   acquire(&icache.lock);
 
@@ -391,13 +391,38 @@ bmap(struct inode *ip, uint bn)
     // Load indirect block, allocating if necessary.
     if((addr = ip->addrs[NDIRECT]) == 0)
       ip->addrs[NDIRECT] = addr = balloc(ip->dev);
-    bp = bread(ip->dev, addr);
+    bp = bread(ip->dev, addr);         //addr种存放的是磁盘块号
     a = (uint*)bp->data;
     if((addr = a[bn]) == 0){
       a[bn] = addr = balloc(ip->dev);
       log_write(bp);
     }
     brelse(bp);
+    return addr;
+  }
+  bn -= NINDIRECT;
+  
+  struct buf *bbp;
+  uint *b;
+  if(bn < NNINDIRECT){
+    // Load indirect block, allocating if necessary.
+    if((addr = ip->addrs[NDIRECT + 1]) == 0)
+      ip->addrs[NDIRECT + 1] = addr = balloc(ip->dev);
+    bp = bread(ip->dev, addr);
+    a = (uint*)bp->data;
+    if((addr = a[bn / NINDIRECT]) == 0){
+      a[bn / NINDIRECT] = addr = balloc(ip->dev);
+      log_write(bp);
+    }
+    brelse(bp);
+
+    bbp = bread(ip->dev, addr);
+    b = (uint*)bbp->data;
+    if((addr = b[bn % NINDIRECT]) == 0){
+      b[bn % NINDIRECT] = addr = balloc(ip->dev);
+      log_write(bbp);
+    }
+    brelse(bbp);
     return addr;
   }
 
@@ -423,12 +448,36 @@ itrunc(struct inode *ip)
   if(ip->addrs[NDIRECT]){
     bp = bread(ip->dev, ip->addrs[NDIRECT]);
     a = (uint*)bp->data;
-    for(j = 0; j < NINDIRECT; j++){
+    for(j = 0; j < NINDIRECT; j++){       //NINDIRECT = 256
       if(a[j])
         bfree(ip->dev, a[j]);
     }
     brelse(bp);
     bfree(ip->dev, ip->addrs[NDIRECT]);
+    ip->addrs[NDIRECT] = 0;
+  }
+
+  struct buf *bbp;
+  uint* b;
+  
+  if(ip->addrs[NDIRECT + 1]){
+    bp = bread(ip->dev, ip->addrs[NDIRECT + 1]);
+    a = (uint*)bp->data;
+    for(int m = 0; m < NINDIRECT; ++m){
+      if(a[m]){
+        bbp = bread(ip->dev, a[m]);
+        b = (uint*)bbp->data;
+        for(int n = 0; n < NINDIRECT; ++n){
+          if(b[n])
+            bfree(ip->dev, b[n]);
+        }
+        brelse(bbp);
+        bfree(ip->dev, a[m]);
+        //a[m] = 0;
+      }
+    }
+    brelse(bp);
+    bfree(ip->dev, ip->addrs[NDIRECT + 1]);
     ip->addrs[NDIRECT] = 0;
   }
 

@@ -3,7 +3,7 @@
 // The buffer cache is a linked list of buf structures holding
 // cached copies of disk block contents.  Caching disk blocks
 // in memory reduces the number of disk reads and also provides
-// a synchronization point for disk blocks used by multiple processes.
+// a synchronization point for disk blocks used by multiple processes.          synchronization:同步
 //
 // Interface:
 // * To get a buffer for a particular disk block, call bread.
@@ -43,7 +43,7 @@ binit(void)
   // Create linked list of buffers
   bcache.head.prev = &bcache.head;
   bcache.head.next = &bcache.head;
-  for(b = bcache.buf; b < bcache.buf+NBUF; b++){
+  for(b = bcache.buf; b < bcache.buf+NBUF; b++){          //构建环形链表 
     b->next = bcache.head.next;
     b->prev = &bcache.head;
     initsleeplock(&b->lock, "buffer");
@@ -78,7 +78,7 @@ bget(uint dev, uint blockno)
     if(b->refcnt == 0) {
       b->dev = dev;
       b->blockno = blockno;
-      b->valid = 0;
+      b->valid = 0;           //表示将从磁盘块读取块数据，而不是错误地使用缓冲区以前的内容
       b->refcnt = 1;
       release(&bcache.lock);
       acquiresleep(&b->lock);
@@ -94,9 +94,9 @@ bread(uint dev, uint blockno)
 {
   struct buf *b;
 
-  b = bget(dev, blockno);
-  if(!b->valid) {
-    virtio_disk_rw(b, 0);
+  b = bget(dev, blockno);         //为给定扇区获取缓冲区, 返回上睡眠锁的缓冲区
+  if(!b->valid) {                 //表示缓冲区需要从磁盘进行读取
+    virtio_disk_rw(b, 0);         // 0 表示只读取
     b->valid = 1;
   }
   return b;
@@ -104,17 +104,17 @@ bread(uint dev, uint blockno)
 
 // Write b's contents to disk.  Must be locked.
 void
-bwrite(struct buf *b)
+bwrite(struct buf *b)            //写回到磁盘
 {
   if(!holdingsleep(&b->lock))
     panic("bwrite");
-  virtio_disk_rw(b, 1);
+  virtio_disk_rw(b, 1);        // 1 表示只写入
 }
 
 // Release a locked buffer.
 // Move to the head of the most-recently-used list.
 void
-brelse(struct buf *b)
+brelse(struct buf *b)                        // 释放bread()中的睡眠锁
 {
   if(!holdingsleep(&b->lock))
     panic("brelse");
