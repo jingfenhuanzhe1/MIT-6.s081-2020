@@ -416,8 +416,8 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
 void vmprint(pagetable_t pgtbl){
   vmprintf(pgtbl, 0);
 }
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 
 void vmprintf(pagetable_t pgtbl, uint64 k){
   if(k == 3) return;
@@ -501,7 +501,7 @@ uint64 kvmdealloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz){
   }
   return newsz;
 }
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
 void vmprint(pagetable_t pgtbl, uint64 k){
   if(k == 3) return;
@@ -523,6 +523,6 @@ void vmprint(pagetable_t pgtbl, uint64 k){
     }
   }
 }
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+//=======
+//>>>>>>> Stashed changes
+//>>>>>>> Stashed changes
