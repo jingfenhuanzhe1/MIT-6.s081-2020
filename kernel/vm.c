@@ -501,7 +501,7 @@ uint64 kvmdealloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz){
   }
   return newsz;
 }
-//<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 void vmprint(pagetable_t pgtbl, uint64 k){
   if(k == 3) return;

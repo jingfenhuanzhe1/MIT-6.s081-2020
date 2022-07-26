@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jul 25 01:10:49 2022
+# Make data base, printed on Mon Jul 25 23:04:06 2022
 
 # Variables
 
@@ -83,7 +83,7 @@ CPUS := 3
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-5cb3c41a-3676-49f6-ba13-e933f9a4bfc0.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-3c2e880f-febf-4e6b-bf43-7ba1e9e5378f.sock
 # makefile (from 'Makefile', line 113)
 LDFLAGS = -z max-page-size=4096
 # makefile (from 'Makefile', line 132)
@@ -282,6 +282,7 @@ user/_mkdir:
 kernel/stats.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -483,8 +484,7 @@ user/_forktest: user/forktest.o user/ulib.o user/usys.o user/printf.o user/umall
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 23:08:28.989311817
- 
+#  Last modified 2022-07-25 02:09:39.4431804
 #  File has been updated.
 #  Successfully updated.
 
@@ -611,7 +611,7 @@ kernel/swtch.o:
 # Not a target:
 kernel/start.d:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 23:12:35.092616955
+#  Last modified 2022-07-25 02:40:25.661841718
 #  File has been updated.
 #  Successfully updated.
 
@@ -624,7 +624,7 @@ user/umalloc.o:
 # Not a target:
 conf/lab.mk:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 23:09:34.71715323
+#  Last modified 2022-07-25 02:09:39.4431804
 #  File has been updated.
 #  Successfully updated.
 
@@ -635,6 +635,7 @@ conf/lab.mk:
 #  File has not been updated.
 
 # Not a target:
+ 
 kernel/file.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -891,6 +892,6 @@ kernel/main.o:
 # strcache performance: lookups = 299 / hit rate = 32%
 # hash-table stats:
 # Load=202/8192=2%, Rehash=0, Collisions=9/299=3%
-# Finished Make data base on Mon Jul 25 01:10:49 2022
+# Finished Make data base on Mon Jul 25 23:04:06 2022
 
  

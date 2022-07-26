@@ -198,11 +198,11 @@ void            virtio_disk_intr(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
+// <<<<<<< Updated upstream
+//=======
+//<<<<<<< Updated upstream
+//=======
+//>>>>>>> Stashed changes
 
 
 
@@ -214,11 +214,11 @@ void            statsinc(void);
 int             snprintf(char*, int, char*, ...);
 
 //vm.c
-<<<<<<< Updated upstream
+// <<<<<<< Updated upstream
 void            vmprint(pagetable_t, uint64);
-=======
+// =======
 void            vmprintf(pagetable_t, uint64);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 
 #ifdef LAB_NET
 // pci.c
@@ -241,7 +241,4 @@ int             sockread(struct sock *, uint64, int);
 int             sockwrite(struct sock *, uint64, int);
 void            sockrecvudp(struct mbuf*, uint32, uint16, uint16);
 #endif
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
