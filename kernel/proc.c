@@ -698,7 +698,7 @@ procdump(void)
 
 //lab 5
 int uvmshouldtouch(uint64 va){
-  //pte_t* pte;
+  pte_t* pte;
   struct proc *p;
   p = myproc();
   return va < p->sz && PGROUNDDOWN(va) != r_sp() && (((pte = walk(p->pagetable, va, 0)) == 0) || ((*pte & PTE_V) == 0));
