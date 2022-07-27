@@ -1,4 +1,4 @@
-	#
+	#    
         # code to switch between user and kernel space.
         #
         # this code is mapped at the same virtual address
@@ -6,9 +6,9 @@
         # it continues to work when it switches page tables.
 	#
 	# kernel.ld causes this to be aligned
-        # to a page boundary.
-        #
-	.section trampsec
+        # to a page boundary.                  1、系统调用的ecall指令会将用户模式改为管理者模式
+        #                                      2、ecall将程序计数器的值保存在sepc寄存器
+	.section trampsec                     #3、ecall会跳转到stvec寄存器指向的指令（stvec指向uservec）
 .globl trampoline         #物理页面的开始
 trampoline:                                   # 1.保存现场（32个通用寄存器）                                                        
 .align 4                                      # 2.把内核的pagetable、内核的stack以及执行进程的CPU号转载到寄存器中
@@ -29,7 +29,7 @@ uservec:                                      # 4.设置scause以反映产生陷
         csrrw a0, sscratch, a0             #执行完之后，a0包含sscratch的值， sscratch中的包含a0的值
 
         # save the user registers in TRAPFRAME
-        sd ra, 40(a0)                  #从a0的40偏移个偏移量开始存储， 0偏移量-32偏移量不用存储，是用来加载(load)的
+        sd ra, 40(a0)     #从a0的40偏移个偏移量开始存储， 0偏移量-32偏移量不用存储，是用来加载(load)的
         sd sp, 48(a0)
         sd gp, 56(a0)
         sd tp, 64(a0)
@@ -60,9 +60,9 @@ uservec:                                      # 4.设置scause以反映产生陷
         sd t5, 272(a0)
         sd t6, 280(a0)
 
-	# save the user a0 in p->trapframe->a0
-        csrr t0, sscratch
-        sd t0, 112(a0)
+	# save the user a0 in p->trapframe->a0           sscratch中包含的是trapframe的值
+        csrr t0, sscratch    #之前a0未保存，在一开始与sscratch交换了值，现在将其赋给t0，再保存到trapframe中
+        sd t0, 112(a0)        #现在a0中是trapframe的地址了
 
         # restore kernel stack pointer from p->trapframe->kernel_sp
         ld sp, 8(a0)

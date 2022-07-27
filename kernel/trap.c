@@ -108,8 +108,8 @@ usertrapret(void)
   // we're about to switch the destination of traps from
   // kerneltrap() to usertrap(), so turn off interrupts until
   // we're back in user space, where usertrap() is correct.
-  intr_off();             //关闭中断，此时准备更新stvec寄存器来指向用户空间的trap处理代码，如果此时未关闭中断，并且发生中断
-     //更新前的stvec寄存器中指向内核空间的trap处理代码   //那么程序会执行走向用户空间的trap处理代码(但是现在处于内核当中)
+  intr_off();             //关闭中断，此时准备更新stvec寄存器来指向用户空间的trap处理代码，如果此时未关闭中断，更新了stvec之后发生中断
+                           //那么程序会执行走向用户空间的trap处理代码(但是现在处于内核当中，这会引发错误)
   // send syscalls, interrupts, and exceptions to trampoline.S
   w_stvec(TRAMPOLINE + (uservec - trampoline));       //为下一个陷阱准备的，令stvec指向uservec
                                                       //uservec和trampoline的地址相同
