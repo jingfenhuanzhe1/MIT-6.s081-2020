@@ -8,7 +8,11 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
+<<<<<<< Updated upstream
 # Make data base, printed on Tue Jul 26 17:45:33 2022
+=======
+# Make data base, printed on Thu Jul 28 23:21:11 2022
+>>>>>>> Stashed changes
 
 # Variables
 
@@ -71,7 +75,11 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/ubuntu
 # environment
+<<<<<<< Updated upstream
 SSH_CONNECTION = 192.168.86.1 54156 192.168.86.128 22
+=======
+SSH_CONNECTION = 192.168.86.1 55647 192.168.86.128 22
+>>>>>>> Stashed changes
 # environment
 PATH = /home/ubuntu/.vscode-server/bin/3b889b090b5ad5793f524b5d1d39fda662b96a2a/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # makefile (from 'Makefile', line 83)
@@ -83,7 +91,11 @@ CPUS := 3
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
+<<<<<<< Updated upstream
 VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-016df8b0-7418-4b32-9ee4-c72436cab981.sock
+=======
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-93de0ff6-524b-4ed7-8307-371a04934acf.sock
+>>>>>>> Stashed changes
 # makefile (from 'Makefile', line 113)
 LDFLAGS = -z max-page-size=4096
 # makefile (from 'Makefile', line 129)
@@ -137,7 +149,11 @@ CC = $(TOOLPREFIX)gcc
 # makefile (from 'Makefile', line 67)
 TOOLPREFIX := riscv64-unknown-elf-
 # environment
+<<<<<<< Updated upstream
 XDG_SESSION_ID = 15
+=======
+XDG_SESSION_ID = 137
+>>>>>>> Stashed changes
 # environment
 USER = ubuntu
 # makefile
@@ -157,7 +173,11 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
+<<<<<<< Updated upstream
 SSH_CLIENT = 192.168.86.1 54156 22
+=======
+SSH_CLIENT = 192.168.86.1 55647 22
+>>>>>>> Stashed changes
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile (from 'Makefile', line 85)
@@ -201,7 +221,11 @@ LANG = C
 # environment
 MOTD_SHOWN = pam
 # variable set hash-table stats:
+<<<<<<< Updated upstream
 # Load=94/1024=9%, Rehash=0, Collisions=23/382=6%
+=======
+# Load=93/1024=9%, Rehash=0, Collisions=23/375=6%
+>>>>>>> Stashed changes
 
 # Pattern-specific Variable Values
 
@@ -209,11 +233,19 @@ MOTD_SHOWN = pam
 
 # Directories
 
+<<<<<<< Updated upstream
 # user (device 2053, inode 137223): 146 files, no impossibilities.
 # kernel (device 2053, inode 136506): 101 files, no impossibilities.
 # . (device 2053, inode 920283): 25 files, no impossibilities.
 
 # 272 files, no impossibilities in 3 directories.
+=======
+# user (device 2053, inode 137223): 135 files, no impossibilities.
+# kernel (device 2053, inode 136506): 101 files, no impossibilities.
+# . (device 2053, inode 920283): 25 files, no impossibilities.
+
+# 261 files, no impossibilities in 3 directories.
+>>>>>>> Stashed changes
 
 # Implicit Rules
 
@@ -269,10 +301,18 @@ handin: tarball-pref myapi.key
 		echo Please go to $(WEBSUB)/ and upload the tarball manually.; }
 
 # Not a target:
+<<<<<<< Updated upstream
 user/call.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+=======
+user/cowtest.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-27 02:20:23.566411752
+#  File has been updated.
+#  Successfully updated.
+>>>>>>> Stashed changes
 
 user/grind.o: user/grind.c kernel/param.h kernel/types.h kernel/stat.h user/user.h kernel/fs.h kernel/fcntl.h kernel/syscall.h kernel/memlayout.h kernel/riscv.h
 #  Implicit rule search has not been done.
@@ -293,10 +333,15 @@ kernel/virtio_disk.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 kernel/kalloc.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.735493629
+=======
+#  Last modified 2022-07-27 02:20:20.018429489
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -383,8 +428,12 @@ kernel/spinlock.h:
 # Not a target:
 kernel/console.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
  
 #  Last modified 2022-07-26 02:08:25.62749069
+=======
+#  Last modified 2022-07-27 02:20:19.90243007
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -490,7 +539,11 @@ user/usys.S: user/usys.pl
 # Not a target:
 kernel/bio.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.223506899
+=======
+#  Last modified 2022-07-27 02:20:20.506427048
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -546,7 +599,11 @@ kernel/main.d:
 # Not a target:
 user/kill.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.271535366
+=======
+#  Last modified 2022-07-27 02:20:22.594416607
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -555,6 +612,7 @@ kernel/vm.o: kernel/vm.c kernel/param.h kernel/types.h kernel/memlayout.h kernel
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 kernel/fcntl.h:
 #  Implicit rule search has not been done.
@@ -594,7 +652,11 @@ user/initcode.S:
 # Not a target:
 kernel/exec.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.61151744
+=======
+#  Last modified 2022-07-27 02:20:20.842425367
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -612,7 +674,11 @@ user/forktest.o: user/forktest.c kernel/types.h kernel/stat.h user/user.h
 # Not a target:
 user/umalloc.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.075530047
+=======
+#  Last modified 2022-07-27 02:20:22.410417527
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -637,6 +703,7 @@ user/_forktest: user/forktest.o user/ulib.o user/usys.o user/printf.o user/umall
 # Not a target:
 kernel/plic.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.747521136
 #  File has been updated.
 #  Successfully updated.
@@ -645,13 +712,20 @@ kernel/plic.d:
 user/call.d:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-26 02:08:28.335564227
+=======
+#  Last modified 2022-07-27 02:20:20.974424707
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-25 23:47:01.228779486
+=======
+#  Last modified 2022-07-26 23:42:06.622332119
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -670,7 +744,11 @@ user/grep.c:
 # Not a target:
 kernel/file.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.507514615
+=======
+#  Last modified 2022-07-27 02:20:20.754425808
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -695,14 +773,22 @@ kernel/buf.h:
 # Not a target:
 kernel/spinlock.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.763494391
+=======
+#  Last modified 2022-07-27 02:20:20.050429329
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 kernel/proc.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.051502224
+=======
+#  Last modified 2022-07-27 02:20:20.334427909
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -735,12 +821,17 @@ user/ln.c:
 # Not a target:
 kernel/string.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.807495587
+=======
+#  Last modified 2022-07-27 02:20:20.102429069
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 kernel/kalloc.o: kernel/kalloc.c kernel/types.h kernel/param.h kernel/memlayout.h kernel/spinlock.h kernel/riscv.h kernel/defs.h
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -765,7 +856,11 @@ kernel/fs.c:
 # Not a target:
 kernel/sysfile.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.711520157
+=======
+#  Last modified 2022-07-27 02:20:20.942424867
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -797,7 +892,11 @@ mkfs/mkfs.c:
 # Not a target:
 kernel/virtio_disk.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.799522549
+=======
+#  Last modified 2022-07-27 02:20:21.030424427
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -822,7 +921,11 @@ user/mkdir.c:
 # Not a target:
 kernel/printf.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.671491889
+=======
+#  Last modified 2022-07-27 02:20:19.950429829
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -875,11 +978,16 @@ user/_sh:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 kernel/trap.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.119504073
+=======
+#  Last modified 2022-07-27 02:20:20.402427569
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -918,7 +1026,11 @@ user/_kill:
 # Not a target:
 user/zombie.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:28.259562167
+=======
+#  Last modified 2022-07-27 02:20:23.510412032
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -955,8 +1067,12 @@ fs.img: mkfs/mkfs README user/_cat user/_echo user/_forktest user/_grep user/_in
 # Not a target:
 user/wc.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
  
 #  Last modified 2022-07-26 02:08:28.239561625
+=======
+#  Last modified 2022-07-27 02:20:23.482412172
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -975,14 +1091,22 @@ kernel/swtch.o:
 # Not a target:
 kernel/start.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.591489709
+=======
+#  Last modified 2022-07-27 02:20:19.81043053
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 user/usys.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.995527875
+=======
+#  Last modified 2022-07-27 02:20:22.342417866
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -994,21 +1118,33 @@ user/umalloc.o: user/umalloc.c kernel/types.h kernel/stat.h user/user.h kernel/p
 # Not a target:
 user/ls.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.343537319
+=======
+#  Last modified 2022-07-27 02:20:22.658416287
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 conf/lab.mk:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-25 23:47:01.232779523
+=======
+#  Last modified 2022-07-27 01:43:53.018456921
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 user/stressfs.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.559543181
+=======
+#  Last modified 2022-07-27 02:20:22.862415268
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1031,7 +1167,11 @@ kernel/file.o: kernel/file.c kernel/types.h kernel/riscv.h kernel/defs.h kernel/
 # Not a target:
 user/ulib.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.97952744
+=======
+#  Last modified 2022-07-27 02:20:22.306418046
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1043,7 +1183,12 @@ user/alarmtest.o: user/alarmtest.c kernel/param.h kernel/types.h kernel/stat.h k
 # Not a target:
 kernel/log.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.411512006
+=======
+ 
+#  Last modified 2022-07-27 02:20:20.682426168
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1062,7 +1207,11 @@ user/forktest.c:
 # Not a target:
 user/initcode.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.819523093
+=======
+#  Last modified 2022-07-27 02:20:21.046424347
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1086,7 +1235,11 @@ kernel/proc.o: kernel/proc.c kernel/types.h kernel/param.h kernel/memlayout.h ke
 # Not a target:
 kernel/pipe.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.555515919
+=======
+#  Last modified 2022-07-27 02:20:20.794425607
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1110,7 +1263,11 @@ kernel/string.o: kernel/string.c kernel/types.h
 # Not a target:
 user/grep.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.219533955
+=======
+#  Last modified 2022-07-27 02:20:22.538416886
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1193,6 +1350,16 @@ user/_alarmtest:
 #  File has not been updated.
 
 # Not a target:
+<<<<<<< Updated upstream
+=======
+kernel/main.d:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-27 02:20:20.126428949
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+>>>>>>> Stashed changes
 user/_zombie:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1208,7 +1375,11 @@ user/rm.c:
 # Not a target:
 user/grind.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:28.199560541
+=======
+#  Last modified 2022-07-27 02:20:23.434412412
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1220,14 +1391,22 @@ kernel/virtio_disk.o: kernel/virtio_disk.c kernel/types.h kernel/riscv.h kernel/
 # Not a target:
 user/ln.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.303536234
+=======
+#  Last modified 2022-07-27 02:20:22.622416467
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 kernel/fs.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.359510593
+=======
+#  Last modified 2022-07-27 02:20:20.630426429
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1256,7 +1435,11 @@ user/bttest.o: user/bttest.c kernel/types.h kernel/stat.h user/user.h
 # Not a target:
 user/printf.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.039529071
+=======
+#  Last modified 2022-07-27 02:20:22.382417666
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1302,7 +1485,11 @@ myapi.key:
 # Not a target:
 user/cat.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.107530915
+=======
+#  Last modified 2022-07-27 02:20:22.434417407
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
  
@@ -1310,7 +1497,11 @@ user/cat.d:
 # Not a target:
 user/mkdir.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.37153808
+=======
+#  Last modified 2022-07-27 02:20:22.686416147
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1323,7 +1514,11 @@ user/_wc:
 # Not a target:
 kernel/sysproc.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.183505811
+=======
+#  Last modified 2022-07-27 02:20:20.470427229
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1352,7 +1547,11 @@ kernel/start.o: kernel/start.c kernel/types.h kernel/param.h kernel/memlayout.h 
 # Not a target:
 user/sh.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.511541879
+=======
+#  Last modified 2022-07-27 02:20:22.822415468
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1379,7 +1578,11 @@ kernel/date.h:
 # Not a target:
 kernel/uart.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.703492759
+=======
+#  Last modified 2022-07-27 02:20:19.98242967
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1391,7 +1594,11 @@ user/ls.o: user/ls.c kernel/types.h kernel/stat.h user/user.h kernel/fs.h
 # Not a target:
 kernel/sleeplock.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.447512985
+=======
+#  Last modified 2022-07-27 02:20:20.706426048
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1411,7 +1618,11 @@ user/_ls:
 # Not a target:
 user/init.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.247534715
+=======
+#  Last modified 2022-07-27 02:20:22.566416746
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1454,6 +1665,7 @@ kernel/console.o: kernel/console.c /usr/lib/gcc/riscv64-unknown-elf/9.3.0/includ
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 user/ulib.o: user/ulib.c kernel/types.h kernel/stat.h kernel/fcntl.h user/user.h
 #  Implicit rule search has not been done.
@@ -1463,14 +1675,22 @@ user/ulib.o: user/ulib.c kernel/types.h kernel/stat.h kernel/fcntl.h user/user.h
 # Not a target:
 kernel/syscall.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:26.151504941
+=======
+#  Last modified 2022-07-27 02:20:20.438427388
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 user/rm.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.39953884
+=======
+#  Last modified 2022-07-27 02:20:22.710416027
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1511,7 +1731,11 @@ kernel/entry.o:
 # Not a target:
 kernel/vm.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:25.919498634
+=======
+#  Last modified 2022-07-27 02:20:20.214428509
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1521,6 +1745,7 @@ kernel/pipe.o: kernel/pipe.c kernel/types.h kernel/riscv.h kernel/defs.h kernel/
 #  File has not been updated.
 
 # Not a target:
+<<<<<<< Updated upstream
 user/_bttest:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1533,6 +1758,8 @@ user/_call:
 #  File has not been updated.
 
 # Not a target:
+=======
+>>>>>>> Stashed changes
 kernel/file.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1563,7 +1790,11 @@ user/zombie.o: user/zombie.c kernel/types.h kernel/stat.h user/user.h
 # Not a target:
 user/forktest.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.171532652
+=======
+#  Last modified 2022-07-27 02:20:22.490417126
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1583,14 +1814,22 @@ kernel/proc.c:
 # Not a target:
 user/echo.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:27.139531784
+=======
+#  Last modified 2022-07-27 02:20:22.458417286
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 user/usertests.d:
 #  Implicit rule search has been done.
+<<<<<<< Updated upstream
 #  Last modified 2022-07-26 02:08:28.067556963
+=======
+#  Last modified 2022-07-27 02:20:23.326412951
+>>>>>>> Stashed changes
 #  File has been updated.
 #  Successfully updated.
 
@@ -1619,6 +1858,7 @@ kernel/string.c:
 
 # No general ('VPATH' variable) search path.
 
+<<<<<<< Updated upstream
  
 # strcache buffers: 1 (0) / strings = 474 / storage = 5125 B / avg = 10 B
 # current buf: size = 8162 B / used = 5125 B / count = 474 / avg = 10 B
@@ -1627,5 +1867,14 @@ kernel/string.c:
 # hash-table stats:
 # Load=474/8192=6%, Rehash=0, Collisions=47/946=5%
 # Finished Make data base on Tue Jul 26 17:45:33 2022
+=======
+# strcache buffers: 1 (0) / strings = 455 / storage = 4903 B / avg = 10 B
+# current buf: size = 8162 B / used = 4903 B / count = 455 / avg = 10 B
+
+# strcache performance: lookups = 914 / hit rate = 50%
+# hash-table stats:
+# Load=455/8192=6%, Rehash=0, Collisions=46/914=5%
+# Finished Make data base on Thu Jul 28 23:21:11 2022
+>>>>>>> Stashed changes
 
  
