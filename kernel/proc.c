@@ -377,7 +377,7 @@ exit(int status)                     //将其子进程提供给 init 进程
   acquire(&p->lock);
 
   // Give any children to init.
-  reparent(p);
+  reparent(p);      //将p进程的子进程交给init进程
 
   // Parent might be sleeping in wait().
   wakeup1(original_parent);
