@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Aug  6 18:59:49 2022
+# Make data base, printed on Sun Aug  7 23:44:20 2022
 
 # Variables
 
@@ -45,7 +45,7 @@ SHELL = /bin/sh
 # makefile (from 'Makefile', line 9)
 U = user
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"1d735750dbb1b9066c7513078396ba0f.zh-cn","_translationsConfigFile":"/home/ubuntu/.vscode-server/data/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/tcf.json","_cacheRoot":"/home/ubuntu/.vscode-server/data/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn","_resolvedLanguagePackCoreLocation":"/home/ubuntu/.vscode-server/data/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/da76f93349a72022ca4670c1b84860304616aaa2","_corruptedFile":"/home/ubuntu/.vscode-server/data/clp/1d735750dbb1b9066c7513078396ba0f.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"e1243840abbb4e31a890d397033a9abf.zh-cn","_translationsConfigFile":"/home/ubuntu/.vscode-server/data/clp/e1243840abbb4e31a890d397033a9abf.zh-cn/tcf.json","_cacheRoot":"/home/ubuntu/.vscode-server/data/clp/e1243840abbb4e31a890d397033a9abf.zh-cn","_resolvedLanguagePackCoreLocation":"/home/ubuntu/.vscode-server/data/clp/e1243840abbb4e31a890d397033a9abf.zh-cn/da76f93349a72022ca4670c1b84860304616aaa2","_corruptedFile":"/home/ubuntu/.vscode-server/data/clp/e1243840abbb4e31a890d397033a9abf.zh-cn/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /home/ubuntu/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/node
 # makefile (from 'Makefile', line 107)
@@ -71,7 +71,7 @@ LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /home/ubuntu
 # environment
-SSH_CONNECTION = 192.168.86.1 53314 192.168.86.128 22
+SSH_CONNECTION = 192.168.86.1 64131 192.168.86.128 22
 # environment
 PATH = /home/ubuntu/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # makefile (from 'Makefile', line 83)
@@ -83,7 +83,7 @@ CPUS := 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-d34b8df4-5958-4b24-9f8f-90313b88e973.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-5b2cd39a-6c8e-428e-bce5-239b15ef909f.sock
 # makefile (from 'Makefile', line 113)
 LDFLAGS = -z max-page-size=4096
 # makefile (from 'Makefile', line 129)
@@ -146,8 +146,6 @@ USER = ubuntu
 %D = $(patsubst %/,%,$(dir $%))
 # default
 MAKE_COMMAND := make
-# environment
-OLDPWD = /home/ubuntu/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2
 # default
 .VARIABLES := 
 # automatic
@@ -157,7 +155,7 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_CLIENT = 192.168.86.1 53314 22
+SSH_CLIENT = 192.168.86.1 64131 22
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile (from 'Makefile', line 85)
@@ -201,7 +199,7 @@ LANG = C
 # environment
 MOTD_SHOWN = pam
 # variable set hash-table stats:
-# Load=94/1024=9%, Rehash=0, Collisions=23/404=6%
+# Load=93/1024=9%, Rehash=0, Collisions=23/403=6%
 
 # Pattern-specific Variable Values
 
@@ -211,9 +209,9 @@ MOTD_SHOWN = pam
 
 # user (device 2053, inode 137223): 176 files, no impossibilities.
 # kernel (device 2053, inode 136506): 105 files, no impossibilities.
-# . (device 2053, inode 920283): 24 files, no impossibilities.
+# . (device 2053, inode 920283): 25 files, no impossibilities.
 
-# 305 files, no impossibilities in 3 directories.
+# 306 files, no impossibilities in 3 directories.
 
 # Implicit Rules
 
@@ -285,7 +283,6 @@ user/grind.o: user/grind.c kernel/param.h kernel/types.h kernel/stat.h user/user
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 qemu: kernel/kernel fs.img
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -296,6 +293,7 @@ qemu: kernel/kernel fs.img
 # Not a target:
 kernel/virtio_disk.c:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -554,6 +552,7 @@ user/ls.c:
 #  File has not been updated.
 
 print-gdbport:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -575,7 +574,6 @@ user/stressfs.c:
 # Not a target:
 user/kill.d:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-08-05 01:45:37.411423911
 #  File has been updated.
 #  Successfully updated.
@@ -832,6 +830,7 @@ user/bcachetest.d:
 #  Last modified 2022-07-31 01:21:20.510084949
 #  File has been updated.
 #  Successfully updated.
+ 
 
 # Not a target:
 .gdbinit.tmpl-riscv:
@@ -855,7 +854,6 @@ mkfs/mkfs.c:
 # Not a target:
 kernel/virtio_disk.d:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-08-05 01:45:36.879422204
 #  File has been updated.
 #  Successfully updated.
@@ -1016,6 +1014,7 @@ kernel/fs.h:
 kernel/sysproc.o: kernel/sysproc.c kernel/types.h kernel/riscv.h kernel/defs.h kernel/date.h kernel/param.h kernel/memlayout.h kernel/spinlock.h kernel/proc.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -1168,6 +1167,7 @@ user/uthread_switch.d:
 # Not a target:
 user/forktest.c:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -1345,6 +1345,7 @@ user/grind.d:
 #  File has been updated.
 #  Successfully updated.
 
+ 
 kernel/virtio_disk.o: kernel/virtio_disk.c kernel/types.h kernel/riscv.h kernel/defs.h kernel/param.h kernel/memlayout.h kernel/spinlock.h kernel/sleeplock.h kernel/fs.h kernel/buf.h kernel/virtio.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1521,6 +1522,7 @@ user/sh.d:
 user/spin.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 user/usys.o: user/usys.S user/usys.S kernel/syscall.h
@@ -1793,12 +1795,12 @@ kernel/string.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 537 / storage = 6029 B / avg = 11 B
-# current buf: size = 8162 B / used = 6029 B / count = 537 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 538 / storage = 6039 B / avg = 11 B
+# current buf: size = 8162 B / used = 6039 B / count = 538 / avg = 11 B
 
-# strcache performance: lookups = 1093 / hit rate = 50%
+# strcache performance: lookups = 1094 / hit rate = 50%
 # hash-table stats:
-# Load=537/8192=7%, Rehash=0, Collisions=53/1093=5%
-# Finished Make data base on Sat Aug  6 18:59:49 2022
+# Load=538/8192=7%, Rehash=0, Collisions=53/1094=5%
+# Finished Make data base on Sun Aug  7 23:44:20 2022
 
  
