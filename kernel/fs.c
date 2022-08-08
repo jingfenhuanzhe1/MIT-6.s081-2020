@@ -200,6 +200,7 @@ ialloc(uint dev, short type)
   struct dinode *dip;
 
   for(inum = 1; inum < sb.ninodes; inum++){
+    printf("inum = %d, sb.ninodes = %d\n", inum, sb.ninodes);
     bp = bread(dev, IBLOCK(inum, sb));
     dip = (struct dinode*)bp->data + inum%IPB;
     if(dip->type == 0){  // a free inode

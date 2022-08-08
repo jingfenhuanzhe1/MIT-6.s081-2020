@@ -13,11 +13,11 @@ struct file {
 #define minor(dev)  ((dev) & 0xFFFF)
 #define	mkdev(m,n)  ((uint)((m)<<16| (n)))
 
-// in-memory copy of an inode        只有C指针引用某个inode时，内核才会在内存中存储该inode    在内存中的副本
+// in-memory copy of an inode        只有C指针引用某个inode时，内核才会在内存中存储该inode   
 struct inode {                  // 大小为 64 字节
   uint dev;           // Device number
   uint inum;          // Inode number
-  int ref;            // Reference count    统计引用内存中引用inode的C指针的数量，引用计数降至0，内核将该inode从内存写回磁盘
+  int ref;            // Reference count 统计引用内存中inode的C指针的数量，引用计数降至0，内核将该inode从内存写回磁盘
   struct sleeplock lock; // protects everything below here
   int valid;          // inode has been read from disk?
 

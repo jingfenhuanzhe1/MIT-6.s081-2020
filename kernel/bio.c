@@ -75,7 +75,7 @@ bget(uint dev, uint blockno)
   // Not cached.
   // Recycle the least recently used (LRU) unused buffer.
   for(b = bcache.head.prev; b != &bcache.head; b = b->prev){
-    if(b->refcnt == 0) {
+    if(b->refcnt == 0) {         //b->refcnt == 0; 表示该缓冲区没有被使用
       b->dev = dev;
       b->blockno = blockno;
       b->valid = 0;           //表示将从磁盘块读取块数据，而不是错误地使用缓冲区以前的内容
