@@ -501,28 +501,28 @@ uint64 kvmdealloc(pagetable_t pagetable, uint64 oldsz, uint64 newsz){
   }
   return newsz;
 }
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
-void vmprint(pagetable_t pgtbl, uint64 k){
-  if(k == 3) return;
-  if(k == 0)
-    printf("page table %p\n", pgtbl);
-  for(int i = 0; i < 512; ++i){
-    pte_t pte = pgtbl[i];
-    uint64 child = PTE2PA(pte);        //虚拟地址转换为物理地址
-    if((pte & PTE_V) && (pte & (PTE_R | PTE_W | PTE_X)) == 0){
+// void vmprint(pagetable_t pgtbl, uint64 k){
+//   if(k == 3) return;
+//   if(k == 0)
+//     printf("page table %p\n", pgtbl);
+//   for(int i = 0; i < 512; ++i){
+//     pte_t pte = pgtbl[i];
+//     uint64 child = PTE2PA(pte);        //虚拟地址转换为物理地址
+//     if((pte & PTE_V) && (pte & (PTE_R | PTE_W | PTE_X)) == 0){
       
-      if(k == 0) printf("..%d: pte %p pa %p\n", i, pte, child);
-      else if(k == 1) printf(".. ..%d: pte %p pa %p\n", i, pte, child);
-      //printf(".. .. ..%d: pte %p pa %p\n", i, pte, child);
-      vmprint((pagetable_t)child, k + 1);
-    }
-    else if(pte & PTE_V){
-      printf(".. .. ..%d: pte %p pa %p\n", i, pte, PTE2PA(pte));
-      vmprint((pagetable_t)child, k + 1);
-    }
-  }
-}
+//       if(k == 0) printf("..%d: pte %p pa %p\n", i, pte, child);
+//       else if(k == 1) printf(".. ..%d: pte %p pa %p\n", i, pte, child);
+//       //printf(".. .. ..%d: pte %p pa %p\n", i, pte, child);
+//       vmprint((pagetable_t)child, k + 1);
+//     }
+//     else if(pte & PTE_V){
+//       printf(".. .. ..%d: pte %p pa %p\n", i, pte, PTE2PA(pte));
+//       vmprint((pagetable_t)child, k + 1);
+//     }
+//   }
+// }
 //=======
 //>>>>>>> Stashed changes
 //>>>>>>> Stashed changes

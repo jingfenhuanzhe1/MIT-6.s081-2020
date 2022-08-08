@@ -215,7 +215,7 @@ int             snprintf(char*, int, char*, ...);
 
 //vm.c
 // <<<<<<< Updated upstream
-void            vmprint(pagetable_t, uint64);
+//void            vmprint(pagetable_t, uint64);
 // =======
 void            vmprintf(pagetable_t, uint64);
 //>>>>>>> Stashed changes
