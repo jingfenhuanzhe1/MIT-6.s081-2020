@@ -168,7 +168,7 @@ freeproc(struct proc *p)
   // 这会导致内核运行所需要的关键物理页被释放，从而导致内核崩溃。
   // 这里使用 kfree(p->kernelpgtbl) 也是不足够的，因为这只释放了**一级页表本身**，而不释放二级以及三级页表所占用的空间。
   
-  // 递归释放进程独享的页表，释放页表本身所占用的空间，但**不释放页表指向的物理页**
+  // 递归释放进程独享的页表，释放页表本身所占用的空间，但不释放页表指向的物理页
   kvm_free_kernelpgtbl(p->kernelpgtbl);
   p->kernelpgtbl = 0;
   p->state = UNUSED;

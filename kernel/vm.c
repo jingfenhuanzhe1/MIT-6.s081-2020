@@ -64,7 +64,7 @@ kvminit_newpgtbl()
 void
 kvminit()
 {
-  kernel_pagetable = kvminit_newpgtbl(); // 仍然需要有全局的内核页表，用于内核 boot 过程，以及无进程在运行时使用。
+  kernel_pagetable = kvminit_newpgtbl();          // 仍然需要有全局的内核页表，用于内核 boot 过程，以及无进程在运行时使用。
   kvmmap(kernel_pagetable, CLINT, CLINT, 0x10000, PTE_R | PTE_W);
 }
 
