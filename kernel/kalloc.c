@@ -18,8 +18,8 @@ extern char end[]; // first address after kernel.
 #define PA2PGREF_ID(p) (((p) - KERNBASE) / PGSIZE)
 #define PGREF_MAX_ENTRIES PA2PGREF_ID(PHYSTOP)
 
-struct spinlock pgreflock;
-int pageref[PGREF_MAX_ENTRIES];
+struct spinlock pgreflock;           // 用于 pageref 数组的锁，防止竞态条件引起内存泄漏
+int pageref[PGREF_MAX_ENTRIES];      // 从 KERNBASE 开始到 PHYSTOP 之间的每个物理页的引用计数
 
 //通过物理地址获取引用计数
 #define PA2PGREF(p) pageref[PA2PGREF_ID((uint64)(p))]
@@ -55,7 +55,7 @@ freerange(void *pa_start, void *pa_end)
 // call to kalloc().  (The exception is when
 // initializing the allocator; see kinit above.)
 void
-kfree(void *pa)
+kfree(void *pa)        //释放物理页的一个引用，引用计数减 1；如果计数变为 0，则释放回收物理页
 {
   struct run *r;
 
@@ -63,7 +63,7 @@ kfree(void *pa)
     panic("kfree");
 
   acquire(&pgreflock);
-  if(--PA2PGREF(pa) <= 0){
+  if(--PA2PGREF(pa) <= 0){         // 当页面的引用计数小于等于 0 的时候，释放页面
     // Fill with junk to catch dangling refs.
     memset(pa, 1, PGSIZE);
 
@@ -93,22 +93,25 @@ kalloc(void)
 
   if(r){
     memset((char*)r, 5, PGSIZE); // fill with junk
+    // 新分配的物理页的引用计数为 1 ，这里无需加锁
     PA2PGREF(r) = 1;
   }
     
   return (void*)r;
 }
 
-//为物理页的引用计数加1
+//创建物理页的一个新引用，引用计数加 1
 void krefpage(void* pa){
   acquire(&pgreflock);
   PA2PGREF(pa)++;
   release(&pgreflock);
 }
 
-//当引用计数已经小于等于1时，不创建和复制到新的物理页，而是直接返回该页本身
+//将物理页的一个引用实复制到一个新物理页上（引用计数为 1），返回得到的副本页；
+//并将本物理页的引用计数减 1
 void* kcopy_n_deref(void* pa){
   acquire(&pgreflock);
+  //当引用计数已经小于等于1时，不创建和复制到新的物理页，而是直接返回该页本身
   if(PA2PGREF(pa) <= 1){
     release(&pgreflock);
     return pa;
@@ -121,7 +124,7 @@ void* kcopy_n_deref(void* pa){
   }
 
   memmove((void*)mem, (void*)pa, PGSIZE);
-  PA2PGREF(pa)--;
+  PA2PGREF(pa)--;         //旧业引用减1
   release(&pgreflock);
   return (void*)mem;
 }

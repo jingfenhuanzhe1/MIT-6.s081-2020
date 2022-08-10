@@ -68,11 +68,9 @@ usertrap(void)
   } else if((which_dev = devintr()) != 0){
     // ok
   } else {
-    if(r_scause() == 13 || r_scause() == 15){
-      if(uvmcheckcow(r_stval())){
-        if(uvmcowcopy(r_stval()) == -1){
-          p->killed = 1;
-        }
+    if((r_scause() == 13 || r_scause() == 15) && uvmcheckcow(r_stval())){
+      if(uvmcowcopy(r_stval()) == -1){
+        p->killed = 1;
       }
     }
     else{

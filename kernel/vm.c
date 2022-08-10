@@ -5,6 +5,8 @@
 #include "riscv.h"
 #include "defs.h"
 #include "fs.h"
+#include "spinlock.h"
+#include "proc.h"
 
 /*
  * the kernel's page table.
@@ -325,10 +327,14 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
     // if((mem = kalloc()) == 0)
     //   goto err;
     // memmove(mem, (char*)pa, PGSIZE);
-    if(mappages(new, i, PGSIZE, (uint64)pa, flags) != 0){
+
+    // 将父进程的物理页直接 map 到子进程 （懒复制），权限设置和父进程一致（不可写，PTE_COW）
+    if(mappages(new, i, PGSIZE, (uint64)pa, flags) != 0){ 
       //kfree(mem);
       goto err;
     }
+
+    // 将物理页的引用次数增加 1
     krefpage((void*)pa);
   }
 

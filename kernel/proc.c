@@ -699,10 +699,10 @@ procdump(void)
 int uvmcheckcow(uint64 va){
   struct proc* p = myproc();
   pte_t* pte;
-  return va < p->sz
+  return va < p->sz         //在进程的内存范围内
          && ((pte = walk(p->pagetable, va, 0)) != 0)
-         && (*pte & PTE_V)
-         && (*pte & PTE_COW);
+         && (*pte & PTE_V)          //页表项存在
+         && (*pte & PTE_COW);       //页是一个懒复制页
 }
 
 //复制并分配物理内存， 重新映射为可写
@@ -713,8 +713,10 @@ int uvmcowcopy(uint64 va){
     panic("uvmcowcopy: walk");
   }
 
+  // 调用 kalloc.c 中的 kcopy_n_deref 方法，复制页
+  // (如果懒复制页的引用已经为 1，则不需要重新分配和复制内存页，只需清除 PTE_COW 标记并标记 PTE_W 即可)
   uint64 pa = PTE2PA(*pte);
-  uint64 new = (uint64)kcopy_n_deref((void*)pa);
+  uint64 new = (uint64)kcopy_n_deref((void*)pa);  //得到一个物理页
   if(new == 0){
     return -1;
   }
