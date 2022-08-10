@@ -181,9 +181,9 @@ uvmunmap(pagetable_t pagetable, uint64 va, uint64 npages, int do_free)
 
   for(a = va; a < va + npages*PGSIZE; a += PGSIZE){
     if((pte = walk(pagetable, a, 0)) == 0)
-      continue;
+      continue;                          // 如果页表项不存在，跳过当前地址 （原本是直接panic）
     if((*pte & PTE_V) == 0)
-      continue;
+      continue;                         // 如果页表项不存在，跳过当前地址 （原本是直接panic）
     if(PTE_FLAGS(*pte) == PTE_V)          //检查低10位中除了PTE_V是否全是0(2级和1级的页表是这样的),
       panic("uvmunmap: not a leaf");
     if(do_free){
@@ -315,7 +315,7 @@ uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
 
   for(i = 0; i < sz; i += PGSIZE){
     if((pte = walk(old, i, 0)) == 0)
-      continue;                  //如果一个页不存在，则认为是懒加载的页
+      continue;                  //如果一个页不存在，则认为是懒加载的页，忽略即可
     if((*pte & PTE_V) == 0)
       continue;                  //如果一个页不存在，则认为是一个懒加载的页
     pa = PTE2PA(*pte);

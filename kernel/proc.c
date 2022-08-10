@@ -701,12 +701,8 @@ int uvmshouldtouch(uint64 va){
   pte_t* pte;
   struct proc *p;
   p = myproc();
-  return va < p->sz && PGROUNDDOWN(va) != r_sp() && (((pte = walk(p->pagetable, va, 0)) == 0) || ((*pte & PTE_V) == 0));
-  // if(va >= p->sz) return 0;
-  // if(va < PGROUNDDOWN(p->trapframe->sp) && va >= PGROUNDDOWN(p->trapframe->sp) - PGSIZE){
-  //   return 0;
-  // }
-  // return 1;
+  return va < p->sz && PGROUNDDOWN(va) != r_sp() 
+          && (((pte = walk(p->pagetable, va, 0)) == 0) || ((*pte & PTE_V) == 0));
 } 
 
 void uvmlazytouch(uint64 va){
