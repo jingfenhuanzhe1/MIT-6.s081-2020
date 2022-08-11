@@ -31,8 +31,8 @@ struct context {
 };
 
 struct thread {
-  char       stack[STACK_SIZE]; /* the thread's stack */
-  int        state;             /* FREE, RUNNING, RUNNABLE */
+  char       stack[STACK_SIZE];        //线程栈
+  int        state;                    //运行中、可运行、空闲
   struct context ctx; 
 };
 struct thread all_thread[MAX_THREAD];
@@ -100,8 +100,8 @@ thread_create(void (*func)())
   // YOUR CODE HERE
 
   t->ctx.ra = (uint64)func;             //返回地址
-  t->ctx.sp = (uint64)(&t->stack) + (STACK_SIZE - 1);    //栈指针， 将线程的栈指针指向其独立的栈，注意到栈的生长是从高地址到低地址， 
-                                                          //所以sp设置为指向stack的最高地址
+  t->ctx.sp = (uint64)(&t->stack) + (STACK_SIZE - 1);    //栈指针， 将线程的栈指针指向其独立的栈， 
+                                  //注意到栈的生长是从高地址到低地址，所以sp设置为指向stack的最高地址
 }
 
 void 
