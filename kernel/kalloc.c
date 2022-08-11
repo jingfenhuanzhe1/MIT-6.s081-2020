@@ -38,7 +38,7 @@ char *kmem_lock_names[] = {
 void
 kinit()
 {
-  for(int i = 0; i < NCPU; i++){
+  for(int i = 0; i < NCPU; i++){                   //初始化每个CPU上的锁
     initlock(&kmem[i].lock, kmem_lock_names[i]);
   }
   freerange(end, (void*)PHYSTOP);
@@ -113,7 +113,7 @@ kalloc(void){
     }
   }
 
-  r = kmem[cpu].freelist; 
+  r = kmem[cpu].freelist;      //不管有没有发生偷页，现在有物理内存了，正常进行分配
   if(r){
     kmem[cpu].freelist = r->next;
   }
